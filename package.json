@@ -1,0 +1,37 @@
+{
+  "name": "pcf-pellets",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Веб-застосунок для розрахунку Product Carbon Footprint (PCF) залізорудних окатишів. ISO 14067 / GHG Protocol / CBAM / Catena-X CX-0029.",
+  "engines": {
+    "node": ">=22.20.0",
+    "npm": ">=10.9.0"
+  },
+  "workspaces": [
+    "packages/shared",
+    "packages/backend",
+    "packages/frontend"
+  ],
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "build:shared": "npm run build --workspace=@pcf/shared",
+    "build:backend": "npm run build --workspace=@pcf/backend",
+    "build:frontend": "npm run build --workspace=@pcf/frontend",
+    "build": "npm run build:shared && npm run build:backend && npm run build:frontend",
+    "dev:backend": "npm run start:dev --workspace=@pcf/backend",
+    "dev:frontend": "npm run dev --workspace=@pcf/frontend",
+    "dev": "npm-run-all --parallel dev:backend dev:frontend",
+    "type-check": "npm run build:shared && npm run type-check --workspace=@pcf/frontend && npm run build:backend",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "migration:run": "npm run migration:run --workspace=@pcf/backend",
+    "migration:revert": "npm run migration:revert --workspace=@pcf/backend",
+    "migration:show": "npm run migration:show --workspace=@pcf/backend",
+    "clean": "rimraf packages/*/dist packages/*/node_modules node_modules"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^5.0.10",
+    "typescript": "^5.6.3"
+  }
+}
